@@ -1,0 +1,7 @@
+rotaryservo:
+	# zero/starting point
+	origin: 
+
+	# name of the joint
+	joint_name: 
+

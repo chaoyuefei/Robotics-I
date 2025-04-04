@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="mara_gazebo" params="prefix MAC1 MAC2 MAC3">
+
+    <gazebo>
+      <plugin name="${prefix}joint_state" filename="libgazebo_ros_joint_state_publisher.so">
+    		<ros>
+    			<argument>~/out:=${prefix}joint_states</argument>
+    		</ros>
+    		<update_rate>25</update_rate>
+    		<joint_name>${prefix}motor1</joint_name>
+    		<joint_name>${prefix}motor2</joint_name>
+    		<joint_name>${prefix}motor3</joint_name>
+    		<joint_name>${prefix}motor4</joint_name>
+    		<joint_name>${prefix}motor5</joint_name>
+        <joint_name>${prefix}motor6</joint_name>
+        <joint_name>${prefix}joint_finger</joint_name>
+    	</plugin>
+
+      <plugin name="hrim_actuator_rotaryservo${MAC1}" filename="libmara_gazebo_joint_plugin.so">
+        <ros></ros>
+        <axis1>${prefix}motor2</axis1>
+        <axis2>${prefix}motor1</axis2>
+        <type>series14</type>
+      </plugin>
+
+      <plugin name="hrim_actuator_rotaryservo${MAC2}" filename="libmara_gazebo_joint_plugin.so">
+        <ros></ros>
+        <axis1>${prefix}motor3</axis1>
+        <axis2>${prefix}motor4</axis2>
+        <type>series17</type>
+      </plugin>
+
+      <plugin name="hrim_actuator_rotaryservo${MAC3}" filename="libmara_gazebo_joint_plugin.so">
+        <ros></ros>
+        <axis1>${prefix}motor5</axis1>
+        <axis2>${prefix}motor6</axis2>
+        <type>series20</type>
+      </plugin>
+
+    </gazebo>
+  </xacro:macro>
+</robot>

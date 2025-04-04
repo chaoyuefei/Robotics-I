@@ -1,0 +1,7 @@
+# orders the gripper to grab or release
+
+bool on_off # true: grab the object | false: release the object
+
+---
+bool goal_accepted # true: the goal is accepted | false: the goal is not accepted
+
