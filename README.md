@@ -161,7 +161,7 @@ This SDF file defines key properties such as:
 
 ## Tips
 
-* Carefully position objects and fine-tune properties to avoid unrealistic scenarios in Gazebo. an example: ![image-20250402213950846](./assets/image-20250402213950846.png)
+* Carefully position objects and fine-tune properties to avoid unrealistic scenarios in Gazebo. an example: ![unrealistic](./assets/unrealistic.png)
 * Use debugging commands such as ros2 node list and ros2 topic list to validate your setup.
 
 # Troubleshooting & Support
