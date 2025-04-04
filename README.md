@@ -15,7 +15,7 @@ The goal of this robotics project is to:
 
 The main package used in this project is the `mara_gazebo`, which contains the Gazebo simulation environment for the MARA robot. This package relies on [`mara_description`](https://github.com/AcutronicRobotics/MARA/tree/dashing/mara_description), which provides 3D models of the MARA for simulation and visualization.
 
-The `mara_gazebo` contains several launch files that will aid you to define a specific application for your robot, specifically:
+The `mara/mara_gazebo` contains several launch files that will aid you to define a specific application for your robot, specifically:
 
 - `mara.launch.py` only spawn mara robot.
 - `mara2.launch.py` spawn objects and mara robot.
