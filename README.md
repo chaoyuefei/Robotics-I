@@ -25,7 +25,7 @@ The `mara/mara_gazebo` contains several launch files that will aid you to define
 To run the ``pick.launch.py`` example, execute the following commands in a terminal:
 
 ```bash
-cd ros2_ws/
+cd ~/ros2_ws/
 source install/setup.bash
 ros2 launch mara_gazebo pick.launch.py
 ```
@@ -51,7 +51,7 @@ To command the MARA robot, follow these steps:
 1. Launch the MARA robot in a Gazebo environment using any of the launch files specified ubove, ex. `mara.launch.py`:
 
 ```
-cd ros2_ws/
+cd ~/ros2_ws/
 source install/setup.bash
 ros2 launch mara_gazebo mara.launch.py
 ```
@@ -59,7 +59,7 @@ ros2 launch mara_gazebo mara.launch.py
 2. Run the example control script either `mara_minimal_publisher_v1` or `mara_minimal_publisher_v2` in a separate terminal:
 
 ```
-cd ros2_ws/
+cd ~/ros2_ws/
 source install/setup.bash
 ros2 run mara_minimal_publisher mara_minimal_publisher_v1
 ```
@@ -163,8 +163,9 @@ This SDF file defines key properties such as:
 
 * Carefully position objects and fine-tune properties to avoid unrealistic scenarios in Gazebo. an example: ![unrealistic](./assets/unrealistic.png)
 * Use debugging commands such as ros2 node list and ros2 topic list to validate your setup.
+* You are supposed to make your own ROS2 package to test your algorithm. Additionally, when doing so, do not forget to source your package source file i.e, `install/setup.bash`
 
-# Troubleshooting & Support
+# Troubleshooting & Support 
 
 If you find a bug in the repository, require assistance, or have any other questions, please open an issue in the repository **(recommended)** or contact one or more of the following via email:
 
