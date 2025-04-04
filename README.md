@@ -7,11 +7,15 @@ This repository contains all the necessary packages and files required to simula
 The goal of this robotics project is to:
 
 * Compute the inverse kinematics of a MARA robot.
-* Program THE robot for a specific application using:
+* Program the robot for a specific application using:
   * Python.
   * Robot Operating System (ROS2).
 
 ## Running the simulation
+
+> **Construct Sim**:
+>
+> Here is the [link](https://app.theconstruct.ai/l/697827c9/) where you can replicate a simulation environment in Construct. Please fork it and modify the forked project. 
 
 The main package used in this project is the `mara_gazebo`, which contains the Gazebo simulation environment for the MARA robot. This package relies on [`mara_description`](https://github.com/AcutronicRobotics/MARA/tree/dashing/mara_description), which provides 3D models of the MARA for simulation and visualization.
 
