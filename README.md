@@ -166,7 +166,7 @@ This SDF file defines key properties such as:
 
 # Troubleshooting & Support
 
-If you find a bug in the repo, you need assistance, or you have any other questions, please contact by email one of (or all of):
+If you find a bug in the repository, require assistance, or have any other questions, please open an issue in the repository **(recommended)** or contact one or more of the following via email:
 
 * Mohayad Omer `Mohayad.omer99@gmail`
 * Chaoyue Fei `Chaoyue.Fei@vub.be`
