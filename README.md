@@ -9,7 +9,7 @@ The goal of this robotics project is to:
 * Compute the inverse kinematics of a MARA robot.
 * Program THE robot for a specific application using:
   * Python.
-  * Robot Operating System (ROS2).\
+  * Robot Operating System (ROS2).
 
 ## Running the simulation
 
