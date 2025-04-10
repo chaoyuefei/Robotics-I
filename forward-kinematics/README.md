@@ -85,7 +85,6 @@ T_{0}^{4} = T_{0}^{1} \cdot T_{1}^{2} \cdot T_{2}^{3} \cdot T_{3}^{4}
 $$
 ```python
 # kinematics.py
-# kinematics.py
 def forward_kinematics(dh_params, return_all=False):
     """
     Compute the forward kinematics based on a DH table.
@@ -110,8 +109,6 @@ def forward_kinematics(dh_params, return_all=False):
 ```
 
 This will give us the homogeneous transformation matrix in the following form:
-
-
 
 $$
 T_0^4 = \begin{bmatrix}

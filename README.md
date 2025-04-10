@@ -1,4 +1,4 @@
-# README
+# Robotics I Supporting Repository
 
 This repo contains materials supporting the Robotics I project.
 
