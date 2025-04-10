@@ -109,7 +109,6 @@ def forward_kinematics(dh_params, return_all=False):
 ```
 
 This will give us the homogeneous transformation matrix in the following form:
-
 $$
 T_0^4 = \begin{bmatrix}
 \mathbf{R} & \mathbf{p} \\
@@ -123,6 +122,8 @@ r_{31} & r_{32} & r_{33} & z \\
 0 & 0 & 0 & 1
 \end{bmatrix}
 $$
+
+
 
 
 
