@@ -87,9 +87,11 @@ def dh_transform(theta, d, a, alpha):
 
 ### Step 2: Perform the FK from base to End-effector
 To obtain the final transformation from the base to the end-effector, we perform matrix multiplication:
+
 $$
 T_{0}^{4} = T_{0}^{1} \cdot T_{1}^{2} \cdot T_{2}^{3} \cdot T_{3}^{4}
 $$
+
 ```python
 # kinematics.py
 def forward_kinematics(dh_params, return_all=False):
@@ -122,8 +124,7 @@ $$
 T_0^4 = \begin{bmatrix}
 \mathbf{R} & \mathbf{p} \\
 \mathbf{0}^T & 1
-\end{bmatrix}
-=
+\end{bmatrix}=
 \begin{bmatrix}
 r_{11} & r_{12} & r_{13} & x \\
 r_{21} & r_{22} & r_{23} & y \\
