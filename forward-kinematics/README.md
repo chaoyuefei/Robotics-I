@@ -30,6 +30,12 @@ We will use a 3-DOF RRR (Revolute-Revolute-Revolute) manipulator as our example.
 
 > ⚠️ **Note:** θ<sub>i</sub> values here are symbolic placeholders corresponding to revolute joint variables. For a step-by-step tutorial on constructing such a table, watch [this video](https://www.youtube.com/watch?time_continue=1&v=rA9tm0gTln8&source_ve_path=MjM4NTE) .
 [this video](https://www.youtube.com/watch?time_continue=1&v=rA9tm0gTln8&embeds_referring_euri=https%3A%2F%2Fblog.robotiq.com%2Fhow-to-calculate-a-robots-forward-kinematics-in-5-easy-steps&source_ve_path=MjM4NTE) 
+TODO in project:
+
+![mara-hd](./mara-dh.png)
+
+
+
 ---
 
 ## 📐 Forward Kinematics (FK)
@@ -195,3 +201,6 @@ To compute joint angles, you may need to use the ``atan2(y, x)`` function. This 
   - Avoids **division by zero**.
   - Returns results in the range \([-pi, pi]\), making it ideal to compute joint angles.
 ---
+
+
+
