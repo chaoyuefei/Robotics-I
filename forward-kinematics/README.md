@@ -11,6 +11,7 @@ This package provides Python code and conceptual explanations to help students u
 ---
 
 ## 🔩 The robot and Its DH parameters
+
 THe kinematics of a **n-DoF robot** can be described using the Denavit–Hartenberg (DH) convention. This method standardizes how we represent the position and orientation of each link in a manipulator.
 
 We will use a 3-DOF RRR (Revolute-Revolute-Revolute) manipulator as our example. Its DH parameters are shown below:
@@ -185,9 +186,10 @@ You now know how to compute forward kinematics using the DH convention. Your nex
 1. Solving for **position** of the wrist center.
 2. Then solving for **orientation** of the end-effector using the last three joints.
 
-> 📚 For a deeper explanation on how to apply this, refer to ... and this [book](add/link).
+> 📚 For a deeper explanation on how to apply this, refer to ... and this [book](./chapter2_3.pdf).
 
 ### Final tip: using ``atan2(y, x)``
+
 To compute joint angles, you may need to use the ``atan2(y, x)`` function. This function computes the arctangent of ``y/x``, and:
   - Handles **all 4 quadrants** correctly.
   - Avoids **division by zero**.
