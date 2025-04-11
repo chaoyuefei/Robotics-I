@@ -1,5 +1,0 @@
----
-string model_name # identifier name for the passed model
-
-byte[] model # .stl of the component
-
