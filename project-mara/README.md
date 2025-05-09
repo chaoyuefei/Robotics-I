@@ -168,6 +168,8 @@ This SDF file defines key properties such as:
 * Carefully position objects and fine-tune properties to avoid unrealistic scenarios in Gazebo. an example: ![unrealistic](./assets/unrealistic.png)
 * Use debugging commands such as ros2 node list and ros2 topic list to validate your setup.
 * You are supposed to make your own ROS2 package to test your algorithm. Additionally, when doing so, do not forget to source your package source file i.e, `install/setup.bash`
+* If you want to control the gripper close and open, call the service, for example:
+  `ros2 service call /hrim_actuator_gripper_000000000004/fingercontrol hrim_actuator_gripper_srvs/srv/ControlFinger "{goal_linearposition: 0, goal_angularposition: 0.7, goal_effort: 2, goal_velocity: 3, goal_acceleration: 0.1}"`
 
 # Troubleshooting & Support 
 
