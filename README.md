@@ -8,6 +8,7 @@ This repo contains materials supporting the Robotics I project.
 .
 ├── forward-kinematics
 └── project-mara
+└── slides
 ```
 
 Currently, there are two sub folders:
