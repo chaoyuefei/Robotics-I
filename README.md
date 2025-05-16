@@ -14,7 +14,8 @@ This repo contains materials supporting the Robotics I project.
 Currently, there are two sub folders:
 
 - forward-kinematics: simple Python scripts display FK-related content.
-- project-mara: supporting materials for mara robot and group project
+- project-mara: supporting materials for mara robot and group project.
+- slides: supporting slides for IK and project.
 
 ## Submission
 Dear students,
