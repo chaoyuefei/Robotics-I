@@ -41,30 +41,30 @@ Kind regards,
 
 Mohayad and Chaoyue
 
-## Evaluation Criteria 
+## General evaluation criteria 
 
 1. **Report**  
    - A comprehensive document detailing the project content and methodology.  
    - Assessment focuses on clarity, coherence, and the effective linking of project concepts.
 
-2. **Inverse Kinematics (IK) Implementation**  
+2. **Inverse Kinematics (IK) implementation**  
    - Successful implementation of inverse kinematics algorithms.  
    - Accuracy, robustness, and the capability to handle various configurations of the robotic arm.
 
-3. **Demo and Video Presentation**  
+3. **Demo and video presentation**  
    - A video showcasing the functionality of the robotic system.  
    - Points awarded for creativity, clarity of presentation, and overall quality of the demonstration.
 
-4. **Coding Style**  
+4. **Coding style**  
    - Code should be well-organized, readable, and easy to navigate.  
    - Deductions for messy or poorly structured code.  
    - Good coding practices include clear variable naming and logical organization.  
    - Implementations that do not follow tutorial guidelines will receive reduced marks.
 
 5. **Presentation**  
-   - **Group Presentation**  
+   - **Group presentation**  
      - A collaborative presentation delivered by the group. 
      - Assessment will focus on teamwork and the quality of explanations regarding the code.  
-   - **Personal Presentation**  
-     - Each group member should respond to questions relevant to the work they conducted (max two minutes per person).  
+   - **Personal presentation**  
+     - Each group member should respond to questions relevant to the work they conducted (max two minutes per person for questions answering).  
      - Assessment based on the clarity of responses and depth of understanding of the project.
