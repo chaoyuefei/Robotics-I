@@ -66,5 +66,5 @@ Mohayad and Chaoyue
      - A collaborative presentation delivered by the group. 
      - Assessment will focus on teamwork and the quality of explanations regarding the code.  
    - **Personal Presentation**  
-     - Each group member will respond to two questions for two minutes.  
+     - Each group member should respond to questions relevant to the work they conducted (max two minutes per person).  
      - Assessment based on the clarity of responses and depth of understanding of the project.
