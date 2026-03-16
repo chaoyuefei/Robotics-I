@@ -1,9 +1,156 @@
 # Installation and Setup guide
-To run and follow the tutorials, you will need [Ubuntu](https://releases.ubuntu.com/)(recommended: Ubuntu 22.04 LTS), preferably a version that is officially supported by [Drake](https://docs.ros.org/en/humble/Installation/Alternatives/Ubuntu-Development-Setup.html#id1). 
- 
-* If you are on **Windows** and don’t have Ubuntu → follow [Install Linux via WSL](#install-linux-via-wsl).
+This repository uses [Drake](https://drake.mit.edu/) primarily through its Python bindings. The easiest setup depends on your operating system:
 
-* If you **already have Ubuntu installed** or you are on **older Ubuntu (e.g. 20.04 LTS)** → jump directly to [Install Drake](#Install-Drake).
+* On **macOS Tahoe (26) on Apple Silicon / arm64**, use a Python virtual environment and install Drake with `pip`. This is the recommended path for this repository.
+
+* On **Windows**, install Ubuntu via WSL and then use the Ubuntu instructions below.
+
+* On **Ubuntu**, install Drake using the official APT packages.
+
+## Recommended setup for this repository
+
+For the tutorials in `tutorial_scripts/`, you only need:
+
+* Python + Drake (`pydrake`)
+* A few Python packages such as `numpy`, `matplotlib`, and `pydot`
+* A browser for MeshCat visualization
+
+You do **not** need to build Drake from source to start the tutorials.
+
+## macOS Tahoe (26, arm64) setup
+
+These instructions target **macOS Tahoe (26)** on Apple Silicon, following Drake's supported configuration.
+
+### 1. Check your Python version
+
+Drake supports `pip` installs on macOS with Python `3.13` or `3.14`, and the official supported configuration for Tahoe is Python `3.14`.
+
+Check your Python version:
+
+```bash
+python3 --version
+```
+
+If your system Python is older, install a newer one first. A practical option is Homebrew Python:
+
+```bash
+brew install python@3.14
+```
+
+Then verify:
+
+```bash
+/opt/homebrew/bin/python3.14 --version
+```
+
+### 2. Clone the repository
+
+```bash
+cd ~
+git clone https://github.com/Coryx99/Robotics-II.git
+cd Robotics-II
+```
+
+### 3. Create and activate a virtual environment
+
+Using a virtual environment avoids conflicts with other Python packages on your machine. We recommend either:
+
+* a standard Python virtual environment (`venv`), or
+* [`uv`](https://docs.astral.sh/uv/) if you already use it.
+
+We do **not** recommend Conda as the default for this course material. Drake's documentation notes that Anaconda / Conda is not tested regularly, so compatibility issues are more likely.
+
+#### Option A: `venv`
+
+```bash
+/opt/homebrew/bin/python3.14 -m venv .venv
+source .venv/bin/activate
+python --version
+```
+
+If `python3` already points to version `3.13` or `3.14`, you can also use:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+#### Option B: `uv`
+
+Install `uv` first if needed:
+
+```bash
+brew install uv
+```
+
+Then create and activate the environment:
+
+```bash
+uv venv --python 3.14 .venv
+source .venv/bin/activate
+python --version
+```
+
+### 4. Install Drake and the Python dependencies used in this repo
+
+Upgrade packaging tools first:
+
+```bash
+python -m pip install --upgrade pip setuptools wheel
+```
+
+Install Drake and the packages used by the tutorial scripts.
+
+If you are using `venv`:
+
+```bash
+python -m pip install drake numpy matplotlib pydot ipython
+```
+
+If you are using `uv`:
+
+```bash
+uv pip install drake numpy matplotlib pydot ipython
+```
+
+Notes:
+
+* `pydot` is used to generate some block-diagram images.
+* If you also want PNG exports of system block diagrams, install Graphviz so the `dot` executable is available:
+
+```bash
+brew install graphviz
+```
+
+* `ipython` is imported by some scripts for display helpers.
+* `tutorial_04_path_planner.py` also imports `ompl`, which is **optional** for the earlier tutorials and may require extra setup depending on your machine.
+
+### 5. Run the sanity check
+
+From the repository root:
+
+```bash
+cd tutorial_scripts
+python tutorial_sanity_check.py
+```
+
+If Drake starts correctly, you should see output similar to:
+
+```text
+INFO:drake:Meshcat listening for connections at http://localhost:7000
+```
+
+Open the printed URL in your browser. You should see the robot appear in MeshCat.
+
+### 6. Recommended first tutorials on macOS
+
+Start with these first:
+
+* `tutorial_sanity_check.py`
+* `tutorial_02.py`
+* `tutorial_03.py`
+
+Leave `tutorial_04_path_planner.py` for later, because it adds the extra `ompl` dependency.
 
 ## Install Linux via WSL
 Developers on Windows can run both Windows and Linux side-by-side using the Windows Subsystem for Linux (WSL).
@@ -43,7 +190,7 @@ Right-click PowerShell → Run as administrator. Then run:
    ```bash
    sudo apt update && sudo apt upgrade
    ```
-## Install Drake
+## Ubuntu: Install Drake
 1. [Install the Drake Toolbox](https://drake.mit.edu/installation.html), preferably a [stable release](https://drake.mit.edu/apt.html#stable-releases), either locally or globally on your system. We recommend using the APT-based stable release:
 
    ```sh
@@ -66,11 +213,17 @@ Right-click PowerShell → Run as administrator. Then run:
    source ~/.bashrc
    ```
 
-## Install Required Python Packages
+## Ubuntu: Install Required Python Packages
 Install additional Python dependencies:
 ```ssh
 sudo apt-get install python3-pip
-pip install ompl numpy matplotlib
+pip install numpy matplotlib pydot ipython
+```
+
+Optional for `tutorial_04_path_planner.py`:
+
+```bash
+pip install ompl
 ```
 
 ## Install Git and Clone the Repo
@@ -93,7 +246,7 @@ git clone https://github.com/Coryx99/Robotics-II.git
 https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git -->
 
 
-## Getting ready Before starting: 
+## Getting ready before starting
 Navigate to the `tutorial_scripts/` folder.
 
 - Run the sanity check script:

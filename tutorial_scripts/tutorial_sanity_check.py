@@ -4,6 +4,7 @@ Test file for inspecting models
 """
 
 import os
+import shutil
 import pydot
 from pydrake.geometry import StartMeshcat
 from pydrake.multibody.parsing import Parser
@@ -40,21 +41,26 @@ def run_visualizer():
     visualizer.parser().AddModelsFromUrl("file://" + os.path.abspath(model_path))
     visualizer.Run()
 
+def maybe_save_block_diagram(diagram, image_path):
+    """Save the diagram image when Graphviz is installed."""
+    if shutil.which("dot") is None:
+        print("Skipping block diagram export because Graphviz 'dot' was not found in PATH.")
+        return
+
+    svg_data = diagram.GetGraphvizString(max_depth=2)
+    graph = pydot.graph_from_dot_data(svg_data)[0]
+    graph.write_png(image_path)
+    print(f"Block diagram saved as {image_path}")
+
 def run_simulation(sim_time_step=0.0005):
     """Run full simulation if visualize=False."""
     diagram = create_sim_scene(sim_time_step)
     simulator = Simulator(diagram)
     simulator.set_target_realtime_rate(1.0)
     simulator.Initialize()
-    simulator.set_publish_every_time_step(True)
     sim_time = 10.0  # seconds
     simulator.AdvanceTo(sim_time)
-
-    # Save diagram imageu
-    svg_data = diagram.GetGraphvizString(max_depth=2)
-    graph = pydot.graph_from_dot_data(svg_data)[0]
-    graph.write_png("figures/block_diagram_01.png")
-    print("Block diagram saved as figures/block_diagram_01.png")
+    maybe_save_block_diagram(diagram, "figures/block_diagram_01.png")
 
 # ------------------ Main ------------------
 if visualize:

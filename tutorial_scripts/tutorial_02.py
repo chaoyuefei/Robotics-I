@@ -11,6 +11,7 @@ This tutorial shows:
 """
 
 import os
+import shutil
 import numpy as np
 import pydot
 from IPython.display import SVG, display
@@ -24,6 +25,18 @@ from pydrake.multibody.tree import SpatialInertia, UnitInertia
 from pydrake.systems.analysis import Simulator
 from pydrake.systems.framework import DiagramBuilder
 from pydrake.visualization import AddDefaultVisualization, ModelVisualizer
+
+
+def maybe_save_block_diagram(diagram, image_path):
+    """Save the diagram image when Graphviz is installed."""
+    if shutil.which("dot") is None:
+        print("Skipping block diagram export because Graphviz 'dot' was not found in PATH.")
+        return
+
+    svg_data = diagram.GetGraphvizString(max_depth=2)
+    graph = pydot.graph_from_dot_data(svg_data)[0]
+    graph.write_png(image_path)
+    print(f"\nBlock diagram saved as: {image_path}")
 
 # --------------------------------------------------------------------
 # Global settings
@@ -214,7 +227,6 @@ def run_simulation(sim_time_step):
         simulator = Simulator(diagram)
         simulator.set_target_realtime_rate(1.0)  # Try to match real time
         simulator.Initialize()
-        simulator.set_publish_every_time_step(True)  # publish at each step
 
         sim_time = 5.0  # seconds of simulated time
 
@@ -222,12 +234,7 @@ def run_simulation(sim_time_step):
         simulator.AdvanceTo(sim_time)    # Runs the simulation for sim_time seconds
         meshcat.PublishRecording()       # Publish recording to replay in Meshcat
             
-        # Save system block diagram as PNG
-        svg_data = diagram.GetGraphvizString(max_depth=2)
-        graph = pydot.graph_from_dot_data(svg_data)[0]
-        image_path = "figures/block_diagram_02.png"
-        graph.write_png(image_path)
-        print(f"\nBlock diagram saved as: {image_path}")
+        maybe_save_block_diagram(diagram, "figures/block_diagram_02.png")
 
 
 # --------------------------------------------------------------------

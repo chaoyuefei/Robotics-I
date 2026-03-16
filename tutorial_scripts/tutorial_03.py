@@ -1,4 +1,5 @@
 import os
+import shutil
 import numpy as np
 import pydot
 from IPython.display import SVG, display
@@ -16,6 +17,18 @@ from pydrake.systems.primitives import ConstantVectorSource, LogVectorOutput
 from pydrake.all import Variable, MakeVectorVariable
 
 from helper.dynamics import CalcRobotDynamics
+
+
+def maybe_save_block_diagram(diagram, image_path):
+    """Save the diagram image when Graphviz is installed."""
+    if shutil.which("dot") is None:
+        print("Skipping block diagram export because Graphviz 'dot' was not found in PATH.")
+        return
+
+    svg_data = diagram.GetGraphvizString(max_depth=2)
+    graph = pydot.graph_from_dot_data(svg_data)[0]
+    graph.write_png(image_path)
+    print(f"Block diagram saved as: {image_path}")
 
 # Start the visualizer and clean up previous instances
 meshcat = StartMeshcat()
@@ -196,12 +209,7 @@ def run_simulation(sim_time_step):
     simulator.Initialize()
     simulator.set_target_realtime_rate(1.)
 
-    # Save the block diagram as an image file
-    svg_data = diagram.GetGraphvizString(max_depth=2)
-    graph = pydot.graph_from_dot_data(svg_data)[0]
-    image_path = "figures/block_diagram_03.png"  # Change this path as needed
-    graph.write_png(image_path)
-    print(f"Block diagram saved as: {image_path}")
+    maybe_save_block_diagram(diagram, "figures/block_diagram_03.png")
     
     # Run simulation and record for replays in MeshCat
     meshcat.StartRecording()

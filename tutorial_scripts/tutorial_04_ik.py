@@ -1,4 +1,5 @@
 import os
+import shutil
 import numpy as np
 import pydot
 from IPython.display import SVG, display
@@ -20,6 +21,18 @@ from pydrake.all import (
     InverseKinematics,
     Solve,
 )
+
+
+def maybe_save_block_diagram(diagram, image_path):
+    """Save the diagram image when Graphviz is installed."""
+    if shutil.which("dot") is None:
+        print("Skipping block diagram export because Graphviz 'dot' was not found in PATH.")
+        return
+
+    svg_data = diagram.GetGraphvizString(max_depth=2)
+    graph = pydot.graph_from_dot_data(svg_data)[0]
+    graph.write_png(image_path)
+    print(f"Block diagram saved as: {image_path}")
 
 
 # Start the visualizer and clean up previous instances
@@ -281,12 +294,7 @@ def run_simulation(sim_time_step):
     # You can set higher or lower values to speed up or slow down simulation playback.
     simulator.set_target_realtime_rate(1.)
 
-    # Save the block diagram as an image file
-    svg_data = diagram.GetGraphvizString(max_depth=2)
-    graph = pydot.graph_from_dot_data(svg_data)[0]
-    image_path = "figures/block_diagram_04_ik.png"
-    graph.write_png(image_path)
-    print(f"Block diagram saved as: {image_path}")
+    maybe_save_block_diagram(diagram, "figures/block_diagram_04_ik.png")
     
     # Run simulation and record for replays in MeshCat
     meshcat.StartRecording()
