@@ -47,8 +47,8 @@ Then verify:
 
 ```bash
 cd ~
-git clone https://github.com/Coryx99/Robotics-II.git
-cd Robotics-II
+git clone https://github.com/chaoyuefei/Robotics-I.git
+cd Robotics-I
 ```
 
 ### 3. Create and activate a virtual environment
