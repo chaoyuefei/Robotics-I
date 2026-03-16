@@ -17,7 +17,7 @@ import pydot
 from IPython.display import SVG, display
 
 # Import necessary parts of Drake
-from pydrake.geometry import StartMeshcat, SceneGraph, Box as DrakeBox, HalfSpace
+from pydrake.geometry import StartMeshcat, SceneGraph, Box as DrakeBox
 from pydrake.math import RigidTransform
 from pydrake.multibody.parsing import Parser
 from pydrake.multibody.plant import AddMultibodyPlantSceneGraph, MultibodyPlant, CoulombFriction
@@ -87,19 +87,20 @@ def create_sim_scene(sim_time_step):
     # ----------------------------------------------------------------
     if add_bodies:
         # --- Ground plane ---
-        # A HalfSpace is an infinite plane (we put it at z=0).
-        # We add both collision (for physics) and visual (for rendering).
+        # Use a thin box as the floor so that it is visible in MeshCat.
+        floor_shape = DrakeBox(4.0, 4.0, 0.02)
+        X_WFloor = RigidTransform([0.0, 0.0, -0.01])
         plant.RegisterCollisionGeometry(
             plant.world_body(),
-            RigidTransform(),    # Pose (identity, so plane at z=0)
-            HalfSpace(),         # Geometry type
+            X_WFloor,
+            floor_shape,
             "ground_collision",
             CoulombFriction(0.9, 0.8)   # Friction coefficients
         )
         plant.RegisterVisualGeometry(
             plant.world_body(),
-            RigidTransform(),
-            HalfSpace(),
+            X_WFloor,
+            floor_shape,
             "ground_visual",
             [0.5, 0.5, 0.5, 1.0]  # RGBA color (gray)
         )
@@ -172,11 +173,11 @@ def create_sim_scene(sim_time_step):
         # Here: box is placed at (0.5, 0, 0.5) with unit quaternion [1, 0, 0, 0].
         plant.SetDefaultPositions(box_model, [1, 0, 0, 0, 0.5, 0.0, 0.5])  
 
-        # (2) Using SetDefaultFreeBodyPose:
+        # (2) Using SetDefaultFloatingBaseBodyPose:
         # This is usually clearer because we work directly with a RigidTransform.
         # Here: we place the box at (0.5, 0, 0.5) with identity rotation.
         X_WBox = RigidTransform([0.5, 0.0, 0.5])
-        plant.SetDefaultFreeBodyPose(box, X_WBox)
+        plant.SetDefaultFloatingBaseBodyPose(box, X_WBox)
 
     # ----------------------------------------------------------------
     # Inspect initial state
