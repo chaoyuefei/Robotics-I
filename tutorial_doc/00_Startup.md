@@ -231,7 +231,7 @@ sudo apt-get install git
 2. Clone this repository   
 ```sh
 cd 
-git clone https://github.com/Coryx99/Robotics-II.git
+git clone https://github.com/chaoyuefei/Robotics-I
 ```
 <!-- for more details in case the previous is not enough::::
 https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git -->
@@ -242,7 +242,7 @@ Navigate to the `tutorial_scripts/` folder.
 
 - Run the sanity check script:
 ```sh 
-cd ~/Robotics-II/tutorial_scripts 
+cd ~/Robotics-I/tutorial_scripts 
 python3 tutorial_sanity_check.py
 ```
 Drake uses MeshCat for 3D visualization, therefore, when you run a script, you will see output like:
