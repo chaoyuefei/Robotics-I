@@ -1,7 +1,7 @@
 # Installation and Setup guide
 This repository uses [Drake](https://drake.mit.edu/) primarily through its Python bindings. The easiest setup depends on your operating system:
 
-* On **macOS Tahoe (26) on Apple Silicon / arm64**, use a Python virtual environment and install Drake with `pip`. This is the recommended path for this repository.
+* On **macOS Tahoe (26) on Apple Silicon / arm64**, use a Python virtual environment and install Drake with `pip`.
 
 * On **Windows**, install Ubuntu via WSL and then use the Ubuntu instructions below.
 
