@@ -6,12 +6,10 @@ We will explore three key concepts:
 
 1. **Inverse Kinematics (IK):** Computing a single target configuration (`q_target`) that achieves a desired end-effector pose.  
 2. **Trapezoidal Trajectories:** Generating smooth, time-parameterized joint-space trajectories between configurations.  
-3. **OMPL Path Planning:** Computing collision-free paths using sampling-based planners.
 
 By the end of this tutorial, you will be able to:
 * Compute target configurations using PyDrake’s `InverseKinematics`.
 * Generate and execute time-based trapezoidal joint trajectories.
-* Integrate OMPL with Drake for collision-free motion planning.
 
 We will execute three example scripts:
 
@@ -19,7 +17,6 @@ We will execute three example scripts:
 cd ~/Robotics-II/tutorial_scripts
 python3 ./tutorial_04_ik.py
 python3 ./tutorial_04_traj.py
-python3 ./tutorial_04_path_planner.py
 ```
 
 ---
@@ -279,173 +276,3 @@ The output includes two plots:
 * Modify `v_max` and `a_max` values in the script and observe the duration change.
 * Create a triangular trajectory by reducing the displacement between start and goal.
 * Integrate the inverse kinematics (IK) solver with the trajectory generator so that, given a desired Cartesian position and orientation, the robot computes the corresponding joint configuration and follows a smooth, time-parameterized trapezoidal trajectory to reach it.
-
----
-
-## 3. OMPL Path Planning — Collision-Free Motion
-
-
-### 3.1 Concept
-
-Up to this point, the robot has been operating in an empty workspace, where the motion from one configuration to another could be achieved using simple interpolation or trapezoidal trajectories.  
-However, in realistic environments, robots must navigate around obstacles such as tables, tools, or other robots.  
-To safely reach a goal configuration without collisions, we need a **path planner** that searches for a sequence of feasible configurations in the robot’s **configuration space (C-space)**.
-
-The [**Open Motion Planning Library (OMPL)**](https://ompl.kavrakilab.org/) is a widely used, open-source framework that implements a large variety of state-of-the-art path planning algorithms, such as:
-- **RRT (Rapidly-exploring Random Tree)** and **RRT-Connect**,  
-- **PRM (Probabilistic Roadmap)**,  
-- **RRT\*** (asymptotically optimal variant), and  
-- several planners for kinodynamic and multi-query problems.
-
-OMPL focuses purely on the *geometric* aspects of planning — finding a feasible or optimal path from a start to a goal configuration while avoiding obstacles.  
-It does not depend on a specific robot model or simulator; instead, users provide interfaces for:
-1. The **state space** (e.g., the robot’s joint positions).  
-2. The **state validity checker**, which determines whether a given configuration is collision-free.  
-3. The **start** and **goal** states, and optionally, the **distance metric** and **interpolation methods**.
-
-In this tutorial, OMPL is integrated with **Drake’s geometry engine**, which provides efficient collision checking through signed distance queries.  
-This allows OMPL to explore only those configurations that are valid within Drake’s current simulation environment.
-
----
-
-### 3.2 Overview of Configuration Space (C-space)
-
-The robot’s **configuration space** \( $\mathcal{C}$ \) is defined by all possible joint configurations \( $\mathbf{q} \in \mathbb{R}^n$ \), where \( n \) is the number of joints.  
-Each point in this space represents a unique posture of the robot.  
-Some configurations cause collisions with obstacles or violate joint limits — these are called **invalid** configurations.  
-The remaining configurations define the **collision-free subspace**, denoted as \( $\mathcal{C}_{\text{free}}$ \):
-
-```math
-\begin{aligned}
-\mathcal{C}_{\text{free}} = 
-\{ \mathbf{q} \in \mathcal{C} \;|\; 
-\text{robot at configuration } \mathbf{q} \text{ is collision-free} \}
-\end{aligned}
-```
-
-The goal of path planning is to find a **continuous path**  
-\( $\pi: [0,1] \to \mathcal{C}_{\text{free}}$ \)  
-such that:
-
-```math
-\begin{aligned}
-\pi(0) = \mathbf{q}_{\text{start}}, 
-\qquad 
-\pi(1) = \mathbf{q}_{\text{goal}}.
-\end{aligned}
-```
-
-The resulting path \( $\pi(s)$ \) is a sequence of intermediate, collision-free configurations that connect the start and goal without intersecting any obstacles.
-
-<div style="text-align:center;">
-  <img src="images/RRT_Connect.png" alt="RRT Connect Concept" width="600" style="display:block;margin:auto;">
-  <p><em>Figure 5 – <a href="https://www.cs.cmu.edu/afs/cs/academic/class/15494-s12/readings/kuffner_icra2000.pdf">
-  RRT-Connect - Sampling-based path planning in configuration space</a>.</em></p>
-</div>
----
-
-### 3.3 Why Sampling-Based Planners?
-
-For high-dimensional manipulators like the Panda robot (\( n = 7 \) revolute + 2 prismatic joints),  
-the configuration space is **nonlinear** and **nonconvex**.  
-Analytical path planning (e.g., solving for all collision-free trajectories algebraically) is computationally intractable.  
-Instead, **sampling-based motion planners** such as RRT and PRM use random sampling to efficiently explore feasible regions of \( $\mathcal{C}$ \):
-
-- **RRT (Rapidly-exploring Random Tree)** incrementally builds a tree rooted at the start configuration, expanding toward random samples to quickly cover the space.
-- **RRT-Connect**, a bidirectional variant, grows two trees (from start and goal) and attempts to connect them, greatly reducing computation time.
-- **PRM (Probabilistic Roadmap)** samples random configurations, connects nearby samples that are collision-free, and builds a graph used to find paths between configurations.
-
-These methods are **probabilistically complete**, meaning they are guaranteed to find a path if one exists (given enough time and samples).  
-They are particularly well-suited for complex robot geometries and environments where traditional grid or graph search would be infeasible.
-
----
-
-### 3.4 Integrating OMPL with Drake
-
-In this tutorial, the integration between OMPL and Drake is implemented through the `MotionProfile` class.  
-Drake provides the **collision checking** capabilities, while OMPL handles the **planning** logic.
-
-The following components are key:
-
-1. **State Space Definition**
-   ```python
-   space = ob.RealVectorStateSpace(num_dof)
-   bounds = ob.RealVectorBounds(num_dof)
-   bounds.setLow(plant.GetPositionLowerLimits())
-   bounds.setHigh(plant.GetPositionUpperLimits())
-   space.setBounds(bounds)
-   ```
-   This defines the \( n \)-dimensional joint space \( $\mathcal{C} = \mathbb{R}^n$ \),  
-   bounded by each joint’s physical limits.
-
-2. **State Validity Checker**
-   The validity checker uses Drake’s geometry engine to determine if a sampled configuration \( $\mathbf{q}$ \) is in \( $\mathcal{C}_{\text{free}}$ \):
-   ```python
-   si.setStateValidityChecker(JointSpaceValidityChecker(si, self.check_configuration_validity, num_dof))
-   ```
-   Internally, this calls:
-   ```python
-   distances = query_object.ComputeSignedDistancePairwiseClosestPoints()
-   return min_distance >= self.min_distance
-   ```
-
-3. **Planner Setup**
-   ```python
-   planner = og.RRTConnect(si)
-   pdef = ob.ProblemDefinition(si)
-   pdef.setStartAndGoalStates(start, goal, tolerance=1e-2)
-   planner.setProblemDefinition(pdef)
-   planner.setup()
-   ```
-   This creates the RRT-Connect planner, defines the start and goal configurations, and initializes the internal OMPL data structures.
-
-4. **Solving and Interpolation**
-   Once planning succeeds, OMPL returns a set of discrete waypoints that are interpolated to create a smooth joint-space trajectory:
-   ```python
-   solved = planner.solve(timeout)
-   if solved:
-       path = pdef.getSolutionPath()
-       path.interpolate(self.num_points)
-       sampled = np.array([[state[i] for i in range(num_dof)] for state in path.getStates()])
-   ```
-
-The output `sampled` is a sequence of feasible configurations that the controller can track over time.
-
----
-
-### 3.5 Benefits of Using Path Planning
-
-Using OMPL-based path planning offers several practical advantages over direct interpolation or naive trajectories:
-
-1. **Collision Avoidance:**  
-   Ensures that all intermediate configurations are free of self-collisions and obstacles, even in cluttered environments.
-
-2. **Feasibility in Complex Spaces:**  
-   Sampling-based planners can handle high-dimensional, nonlinear configuration spaces that are infeasible for grid-based search methods.
-
-3. **Modularity and Extensibility:**  
-   OMPL’s interface allows you to easily switch between planners (e.g., `RRTStar`, `PRM`, `BITStar`) or tune parameters such as step size and goal tolerance.
-
-4. **Integration with Simulation and Control:**  
-   By connecting OMPL with Drake’s geometry engine, planned paths can be directly simulated and visualized in MeshCat, providing an end-to-end motion planning workflow.
-
-5. **Foundation for Advanced Planning:**  
-   The OMPL pipeline can later be extended to include trajectory smoothing, time parameterization, or integration with optimization-based planners (e.g., direct collocation).
-
-In summary, OMPL enables the robot to move safely and intelligently in complex environments by searching for a collision-free sequence of configurations in its configuration space.  
-Combined with the PD+G controller and Drake’s visualization tools, it provides a complete framework for both high-level motion planning and low-level execution.
-
-### 3.6 Simulation
-```bash
-python3 ./tutorial_04_path_planner.py
-```
-
-The robot plans and follows a path avoiding the red box obstacle.
-
-
-### 3.7 Exercises
-* Add more obstacles and re-run the simulation.
-* Try different OMPL planners like `RRTStar` or `PRM`.
-* Adjust `self.min_distance` to make the robot move closer or further from obstacles.
-
----

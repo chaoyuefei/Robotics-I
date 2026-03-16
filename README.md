@@ -2,13 +2,11 @@
 Tutorials and materials for the Robotics I practical sessions.
 
 ### Objectives
-This course introduces the fundamental concepts used in robotics simulation and control. Through the tutorials in this repository, students will work with robot models in Drake, run simulations, and implement basic control and motion generation examples. By the end of the practical sessions, students should be able to:
+This course introduces the fundamental concepts used in robotics simulation and control. Through the tutorials in this repository, students will work with robot models in Drake, run simulations  and motion generation examples. By the end of the practical sessions, students should be able to:
 
 1. Model robotic systems and simple environments.
-2. Understand and simulate robot kinematics and dynamics.
-3. Implement basic feedback control strategies.
-4. Generate and follow simple reference trajectories.
-5. Evaluate robot behavior in simulation.
+2. Understand and simulate robot kinematics.
+3. Generate and follow simple reference trajectories.
 
 ***Results demonstrated through:*** tutorial exercises, simulations, and course assignments.
 
@@ -19,9 +17,7 @@ The practical sessions in this repository focus on:
 
 - **Simulation**: running and visualizing robot behavior in MeshCat.
 
-- **Basic control**: implementing simple controllers for motion tasks.
-
-- **Trajectory generation**: defining and tracking reference motions.
+- **Kinematics and Trajectory generation**: defining reference trajectories.
 
 ### How to start with the repo?
 
@@ -37,7 +33,6 @@ The practical sessions in this repository focus on:
 | [00_Startup.md](./tutorial_doc/00_Startup.md)         | Installation guide for the project material and its dependencies, along with a guide to setting up Ubuntu on your machine. |
 | [01_Introduction.md](./tutorial_doc/01_Introduction.md)         | Introduction to the simulation framework (Drake), its basic components, and what you can achieve with it. |
 | [02_Modelling.md](./tutorial_doc/02_Modelling.md)                 | Modeling and simulating robots and environments in Drake using the `MultibodyPlant`. Includes visualization with MeshCat. |
-| [03_Dynamics.md](./tutorial_doc/03_Dynamics.md)                 | 	Running simulations with dynamics. Introduction to Drake’s `LeafSystem` for designing system blocks, and building model-based controllers. |
 | [04_TrajectoryPlanning.md](./tutorial_doc/04_TrajectoryPlanning.md)                 | 	Short introduction to trajectory planning: defining a reference trajectory, sending it to the controller, and visualizing results. |
 ---
 

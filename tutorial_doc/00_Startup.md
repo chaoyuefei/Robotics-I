@@ -123,7 +123,6 @@ brew install graphviz
 ```
 
 * `ipython` is imported by some scripts for display helpers.
-* `tutorial_04_path_planner.py` also imports `ompl`, which is **optional** for the earlier tutorials and may require extra setup depending on your machine.
 
 ### 5. Run the sanity check
 
@@ -149,8 +148,6 @@ Start with these first:
 * `tutorial_sanity_check.py`
 * `tutorial_02.py`
 * `tutorial_03.py`
-
-Leave `tutorial_04_path_planner.py` for later, because it adds the extra `ompl` dependency.
 
 ## Install Linux via WSL
 Developers on Windows can run both Windows and Linux side-by-side using the Windows Subsystem for Linux (WSL).
@@ -218,12 +215,6 @@ Install additional Python dependencies:
 ```ssh
 sudo apt-get install python3-pip
 pip install numpy matplotlib pydot ipython
-```
-
-Optional for `tutorial_04_path_planner.py`:
-
-```bash
-pip install ompl
 ```
 
 ## Install Git and Clone the Repo
