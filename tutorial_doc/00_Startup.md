@@ -1,64 +1,63 @@
-# Installation and Setup guide
-This repository uses [Drake](https://drake.mit.edu/) primarily through its Python bindings. The easiest setup depends on your operating system:
+# Installation and Setup Guide
+This repository uses [Drake](https://drake.mit.edu/) primarily through its Python bindings. 
+<!-- Choose the setup that matches your system: -->
 
-* On **macOS Tahoe (26) on Apple Silicon / arm64**, use a Python virtual environment and install Drake with `pip`.
+<!-- * On **macOS Tahoe (26) on Apple Silicon / arm64**, use a Python virtual environment and install Drake with `pip`. -->
 
-* On **Windows**, install Ubuntu via WSL and then use the Ubuntu instructions below.
+## 1. Choose your platform
+| System | Setup |
+|---|---|
+| **macOS Tahoe (Apple Silicon)** | Python virtual environment + `pip install drake` |
+| **Windows** | Install **Ubuntu via WSL**, then follow the Ubuntu setup below |
+| **Ubuntu / WSL** | Install Drake via **APT** |
 
-* On **Ubuntu**, install Drake using the official APT packages.
+## ⚡ Quick Start (Recommended)
 
-## Recommended setup for this repository
+If you are on:
 
-For the tutorials in `tutorial_scripts/`, you only need:
+- **macOS** → follow Section 2 (macOS), then Section 3  
+- **Windows** → install WSL, then follow Ubuntu setup, then Section 3  
+- **Ubuntu** → install Drake, then Section 3  
 
-* Python + Drake (`pydrake`)
-* A few Python packages such as `numpy`, `matplotlib`, and `pydot`
-* A browser for MeshCat visualization
+Estimated setup time: 10–20 minutes.
+<!-- You do **not** need to build Drake from source to start the tutorials. -->
 
-You do **not** need to build Drake from source to start the tutorials.
-
-## macOS Tahoe (26, arm64) setup
-
-These instructions target **macOS Tahoe (26)** on Apple Silicon, following Drake's supported configuration.
-
-### 1. Check your Python version
-
-Drake supports `pip` installs on macOS with Python `3.13` or `3.14`, and the official supported configuration for Tahoe is Python `3.14`.
+# 2. OS-specific Setup
+## 🟣 macOS (Apple Silicon)
+### 2.1. Check your Python version
+Drake supports `pip` installs on macOS with Python `3.13` or `3.14`. The recommended version for Tahoe is Python `3.14`.
 
 Check your Python version:
-
 ```bash
 python3 --version
 ```
 
-If your system Python is older, install a newer one first. A practical option is Homebrew Python:
+If needed, install a newer version using Homebrew:
 
 ```bash
 brew install python@3.14
 ```
-
-Then verify:
+Verify:
 
 ```bash
 /opt/homebrew/bin/python3.14 --version
 ```
 
-### 2. Clone the repository
+<!-- ### 2. Clone the repository
 
 ```bash
 cd ~
 git clone https://github.com/chaoyuefei/Robotics-I.git
 cd Robotics-I
-```
+``` -->
 
-### 3. Create and activate a virtual environment
-
+### 2.2 Create and activate a virtual environment
 Using a virtual environment avoids conflicts with other Python packages on your machine. We recommend either:
 
 * a standard Python virtual environment (`venv`), or
 * [`uv`](https://docs.astral.sh/uv/) if you already use it.
 
-We do **not** recommend Conda as the default for this course material. Drake's documentation notes that Anaconda / Conda is not tested regularly, so compatibility issues are more likely.
+Conda **is not recommended** for this course.
 
 #### Option A: `venv`
 
@@ -91,18 +90,13 @@ source .venv/bin/activate
 python --version
 ```
 
-### 4. Install Drake and the Python dependencies used in this repo
-
+### 2.3 Install Drake and dependencies
 Upgrade packaging tools first:
-
 ```bash
 python -m pip install --upgrade pip setuptools wheel
 ```
 
-Install Drake and the packages used by the tutorial scripts.
-
-If you are using `venv`:
-
+Using `venv`:
 ```bash
 python -m pip install drake numpy matplotlib pydot ipython
 ```
@@ -114,48 +108,19 @@ uv pip install drake numpy matplotlib pydot ipython
 ```
 
 Notes:
-
-* `pydot` is used to generate some block-diagram images.
-* If you also want PNG exports of system block diagrams, install Graphviz so the `dot` executable is available:
-
+If you also want PNG exports of system block diagrams, install Graphviz so the `dot` executable is available:
 ```bash
 brew install graphviz
 ```
 
-* `ipython` is imported by some scripts for display helpers.
-
-### 5. Run the sanity check
-
-From the repository root:
-
-```bash
-cd tutorial_scripts
-python tutorial_sanity_check.py
-```
-
-If Drake starts correctly, you should see output similar to:
-
-```text
-INFO:drake:Meshcat listening for connections at http://localhost:7000
-```
-
-Open the printed URL in your browser. You should see the robot appear in MeshCat.
-
-### 6. Recommended first tutorials on macOS
-
-Start with these first:
-
-* `tutorial_sanity_check.py`
-* `tutorial_02.py`
-* `tutorial_03.py`
-
-## Install Linux via WSL
+## 🟢 Windows (WSL)
 Developers on Windows can run both Windows and Linux side-by-side using the Windows Subsystem for Linux (WSL).
 This is the easiest way to get Ubuntu running without a full virtual machine.
 
 > ⚠️ Requirements: Windows 10 (build 19041+) or Windows 11.
 For older versions, see the [manual install page](https://learn.microsoft.com/en-us/windows/wsl/install-manual).
 
+### 2.1 Install WSL
 1) Open PowerShell as Administrator
 Right-click PowerShell → Run as administrator. Then run:
    ```powershell
@@ -169,7 +134,7 @@ Right-click PowerShell → Run as administrator. Then run:
    ``` 
    then restart your machine.
 
-2) Check your WSL version
+### 2.2 Check WSL version
    ```PowerShell
    wsl.exe --list --verbose
    ```
@@ -178,18 +143,19 @@ Right-click PowerShell → Run as administrator. Then run:
    wsl --set-version Ubuntu-22.04 2
    ```
 
-3) The first time you start Ubuntu (from the Start menu), you’ll be asked to create a Linux username and password.
+### 2.3 First-time setup
+The first time you start Ubuntu (from the Start menu), you’ll be asked to create a Linux username and password.
 <div style="text-align: center;">
     <img src="images/ubuntUSER.png" alt="UbuntuUser">
 </div>
 
-4) Update your Linux packages
-   ```bash
-   sudo apt update && sudo apt upgrade
-   ```
-## Ubuntu: Install Drake
-1. [Install the Drake Toolbox](https://drake.mit.edu/installation.html), preferably a [stable release](https://drake.mit.edu/apt.html#stable-releases), either locally or globally on your system. We recommend using the APT-based stable release:
-
+### 2.4 Update packages
+```bash
+sudo apt update && sudo apt upgrade
+```
+## 🔵 Ubuntu / WSL (Drake Installation)
+### 2.5 Ubuntu / WSL (Drake Installation)
+1. Install Drake (APT):
    ```sh
    sudo apt-get update
    sudo apt-get install --no-install-recommends ca-certificates gnupg lsb-release wget
@@ -198,7 +164,7 @@ Right-click PowerShell → Run as administrator. Then run:
    sudo apt-get update
    sudo apt-get install --no-install-recommends drake-dev
    ```
-2. Environment variables: add the following to your ~/.bashrc (or ~/.bash_aliases):
+2. Set environment variables: add the following to your ~/.bashrc (or ~/.bash_aliases):
 
    ```sh
    export PATH="/opt/drake/bin${PATH:+:${PATH}}"
@@ -210,15 +176,20 @@ Right-click PowerShell → Run as administrator. Then run:
    source ~/.bashrc
    ```
 
-## Ubuntu: Install Required Python Packages
-Install additional Python dependencies:
-```ssh
+### 2.6 Install Python dependencies
+```bash
 sudo apt-get install python3-pip
 pip install numpy matplotlib pydot ipython
 ```
 
-## Install Git and Clone the Repo
-1. Install GIT :
+# 3. Common Setup (All Systems)
+
+## 3.1 Install Git
+1. macOS:
+```bash
+brew install git
+```
+2. Ubuntu / WSL:
 ```bash
 sudo apt-get install git
 ```
@@ -228,27 +199,29 @@ sudo apt-get install git
    Follow this step-by-step guide: 
    [👉 How to stup SSH keys for github cloning](https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/github-clone-with-ssh-keys). -->
 
-2. Clone this repository   
+## 3.2 Clone the repository
 ```sh
-cd 
-git clone https://github.com/chaoyuefei/Robotics-I
+cd ~
+git clone https://github.com/chaoyuefei/Robotics-I.git
+cd Robotics-I
 ```
 <!-- for more details in case the previous is not enough::::
 https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-git -->
 
 
-## Getting ready before starting
-Navigate to the `tutorial_scripts/` folder.
-
-- Run the sanity check script:
+## 3.3 Run the sanity check script:
 ```sh 
 cd ~/Robotics-I/tutorial_scripts 
 python3 tutorial_sanity_check.py
 ```
-Drake uses MeshCat for 3D visualization, therefore, when you run a script, you will see output like:
+Expected output:
 ```sh 
 INFO:drake:Meshcat listening for connections at http://localhost:7000
 ```
 Open the printed link in your browser and you should see a robot visualized.
 
-That’s it! You now have Ubuntu, Drake, and this repo ready to run the tutorials.
+## 3.4 Recommended tools
+* [VS Code](https://code.visualstudio.com/) 
+* [WSL extension (for Windows users)](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) extension. 
+
+That’s it! You now have Drake and this repository ready to run the tutorials.

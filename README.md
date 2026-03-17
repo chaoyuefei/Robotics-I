@@ -33,6 +33,7 @@ The practical sessions in this repository focus on:
 | [00_Startup.md](./tutorial_doc/00_Startup.md)         | Installation guide for the project material and its dependencies, along with a guide to setting up Ubuntu on your machine. |
 | [01_Introduction.md](./tutorial_doc/01_Introduction.md)         | Introduction to the simulation framework (Drake), its basic components, and what you can achieve with it. |
 | [02_Modelling.md](./tutorial_doc/02_Modelling.md)                 | Modeling and simulating robots and environments in Drake using the `MultibodyPlant`. Includes visualization with MeshCat. |
+| [03_Dynamics.md](./tutorial_doc/03_Dynamics.mdss)                 | Running simulations with dynamics. Introduction to Drake’s `LeafSystem` for designing system blocks, and building model-based controllers. |
 | [04_TrajectoryPlanning.md](./tutorial_doc/04_TrajectoryPlanning.md)                 | 	Short introduction to trajectory planning: defining a reference trajectory, sending it to the controller, and visualizing results. |
 ---
 
