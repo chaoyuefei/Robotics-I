@@ -98,13 +98,13 @@ python -m pip install --upgrade pip setuptools wheel
 
 Using `venv`:
 ```bash
-python -m pip install drake numpy matplotlib pydot ipython
+python -m pip install drake ompl numpy matplotlib pydot ipython
 ```
 
 If you are using `uv`:
 
 ```bash
-uv pip install drake numpy matplotlib pydot ipython
+uv pip install drake ompl numpy matplotlib pydot ipython
 ```
 
 Notes:
@@ -179,7 +179,7 @@ sudo apt update && sudo apt upgrade
 ### 2.6 Install Python dependencies
 ```bash
 sudo apt-get install python3-pip
-pip install numpy matplotlib pydot ipython
+pip install ompl numpy matplotlib pydot ipython
 ```
 
 # 3. Common Setup (All Systems)
