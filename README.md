@@ -1,7 +1,7 @@
 # Robotics I
 Tutorials and materials for the Robotics I practical sessions.
 
-The report templates in word format and latex format are available in the [`report_templates`](./report_template/) folder.
+The report templates in word format and latex format are available in the [`report_templates`](./report-template/) folder.
 
 ### Objectives
 This course introduces the fundamental concepts used in robotics simulation and control. Through the tutorials in this repository, students will work with robot models in Drake, run simulations  and motion generation examples. By the end of the practical sessions, students should be able to:
